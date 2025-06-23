@@ -1,57 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { ARScene } from './components/ARScene';
-import { ErrorScreen } from './components/ErrorScreen';
+import React from 'react';
 
 function App() {
-  const [experienceId, setExperienceId] = useState<string>('');
-  const [error, setError] = useState<string>('');
-
-  useEffect(() => {
-    // Extract experience ID from URL path
-    const path = window.location.pathname;
-    
-    if (path && path !== '/') {
-      const id = path.substring(1); // Remove leading slash
-      console.log('🎯 Starting AR experience:', id);
-      setExperienceId(id);
-    } else {
-      // Default experience if no path
-      setExperienceId('granny');
-    }
-  }, []);
-
-  if (error) {
-    return (
-      <ErrorScreen
-        error={error}
-        onRetry={() => {
-          setError('');
-          window.location.reload();
-        }}
-        onGoHome={() => {
-          setError('');
-          window.location.href = '/';
-        }}
-      />
-    );
-  }
-
-  if (!experienceId) {
-    return (
-      <div className="fixed inset-0 bg-black flex items-center justify-center">
-        <div className="text-white text-center">
-          <div className="animate-spin w-8 h-8 border-2 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <ARScene 
-      experienceId={experienceId}
-      onError={setError}
-    />
+    <div className="min-h-screen bg-gray-100 flex flex-col">
+      <header className="bg-white shadow">
+        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold text-gray-900">QR Scanner</h1>
+        </div>
+      </header>
+      <main className="flex-grow">
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <div className="px-4 py-6 sm:px-0">
+            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
+              <p className="text-gray-500">Scanner content will appear here</p>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer className="bg-white shadow">
+        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-gray-500 text-sm">
+            QR Scanner Application
+          </p>
+        </div>
+      </footer>
+    </div>
   );
 }
 
